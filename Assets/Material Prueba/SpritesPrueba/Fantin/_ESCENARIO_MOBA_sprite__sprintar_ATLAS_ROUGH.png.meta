@@ -1,0 +1,514 @@
+fileFormatVersion: 2
+guid: fbf423055907df9489c0b5efb2c29f93
+timeCreated: 1542149399
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: correr1
+    21300002: correr2
+    21300004: correr3
+    21300006: correr4
+    21300008: correr5
+    21300010: correr6
+    21300012: _ESCENARIO_MOBA_sprite__sprintar_ATLAS_ROUGH_6
+    21300014: correr7
+    21300016: _ESCENARIO_MOBA_sprite__sprintar_ATLAS_ROUGH_8
+    21300018: correr8
+    21300020: _ESCENARIO_MOBA_sprite__sprintar_ATLAS_ROUGH_10
+    21300022: idle1
+    21300024: idle2
+    21300026: idle3
+    21300028: salto6
+    21300030: salto1
+    21300032: salto2
+    21300034: salto3
+    21300036: salto4
+    21300038: salto5
+    21300040: golpe1
+    21300042: golpe2
+    21300044: golpe3
+    21300046: golpe4
+    21300048: golpe5
+    21300050: _ESCENARIO_MOBA_sprite__sprintar_ATLAS_ROUGH_27
+    21300052: golpe6
+    21300054: corre1
+    21300056: corre2
+    21300058: corre3
+    21300060: corre4
+    21300062: corre5
+    21300064: corre6
+    21300066: corre7
+    21300068: corre8
+    21300070: _ESCENARIO_MOBA_sprite__sprintar_ATLAS_ROUGH_11
+    21300072: _ESCENARIO_MOBA_sprite__sprintar_ATLAS_ROUGH_12
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: iPhone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: WebGL
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: corre1
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 1632
+        width: 186
+        height: 284
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: corre2
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 1639
+        width: 182
+        height: 268
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: corre3
+      rect:
+        serializedVersion: 2
+        x: 566
+        y: 1643
+        width: 199
+        height: 265
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: corre4
+      rect:
+        serializedVersion: 2
+        x: 796
+        y: 1634
+        width: 198
+        height: 263
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: corre5
+      rect:
+        serializedVersion: 2
+        x: 1015
+        y: 1632
+        width: 189
+        height: 268
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: corre6
+      rect:
+        serializedVersion: 2
+        x: 1246
+        y: 1634
+        width: 188
+        height: 270
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: _ESCENARIO_MOBA_sprite__sprintar_ATLAS_ROUGH_6
+      rect:
+        serializedVersion: 2
+        x: 1435
+        y: 1670
+        width: 12
+        height: 16
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: corre7
+      rect:
+        serializedVersion: 2
+        x: 1482
+        y: 1644
+        width: 196
+        height: 260
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: _ESCENARIO_MOBA_sprite__sprintar_ATLAS_ROUGH_8
+      rect:
+        serializedVersion: 2
+        x: 1671
+        y: 1680
+        width: 9
+        height: 7
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: corre8
+      rect:
+        serializedVersion: 2
+        x: 1712
+        y: 1632
+        width: 196
+        height: 257
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: _ESCENARIO_MOBA_sprite__sprintar_ATLAS_ROUGH_10
+      rect:
+        serializedVersion: 2
+        x: 1908
+        y: 1672
+        width: 9
+        height: 6
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: _ESCENARIO_MOBA_sprite__sprintar_ATLAS_ROUGH_11
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 1632
+        width: 7
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: _ESCENARIO_MOBA_sprite__sprintar_ATLAS_ROUGH_12
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 1633
+        width: 4
+        height: 4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: idle1
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 1246
+        width: 199
+        height: 278
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: idle2
+      rect:
+        serializedVersion: 2
+        x: 359
+        y: 1246
+        width: 199
+        height: 278
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: idle3
+      rect:
+        serializedVersion: 2
+        x: 586
+        y: 1247
+        width: 199
+        height: 278
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: salto6
+      rect:
+        serializedVersion: 2
+        x: 1428
+        y: 928
+        width: 196
+        height: 322
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: salto1
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 642
+        width: 198
+        height: 278
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: salto2
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 651
+        width: 209
+        height: 249
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: salto3
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 667
+        width: 196
+        height: 305
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: salto4
+      rect:
+        serializedVersion: 2
+        x: 934
+        y: 763
+        width: 195
+        height: 306
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: salto5
+      rect:
+        serializedVersion: 2
+        x: 1192
+        y: 836
+        width: 196
+        height: 317
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: golpe1
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 206
+        width: 198
+        height: 275
+      alignment: 9
+      pivot: {x: 0.63502395, y: 0.04765553}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: golpe2
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 214
+        width: 196
+        height: 284
+      alignment: 9
+      pivot: {x: 0.9145542, y: 0.03691617}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: golpe3
+      rect:
+        serializedVersion: 2
+        x: 686
+        y: 215
+        width: 234
+        height: 282
+      alignment: 9
+      pivot: {x: 0.851714, y: 0.042754855}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: golpe4
+      rect:
+        serializedVersion: 2
+        x: 952
+        y: 208
+        width: 252
+        height: 256
+      alignment: 9
+      pivot: {x: 0.94724286, y: 0.043001533}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: golpe5
+      rect:
+        serializedVersion: 2
+        x: 1204
+        y: 210
+        width: 262
+        height: 250
+      alignment: 9
+      pivot: {x: 0.9461791, y: 0.056614745}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: _ESCENARIO_MOBA_sprite__sprintar_ATLAS_ROUGH_27
+      rect:
+        serializedVersion: 2
+        x: 1460
+        y: 219
+        width: 6
+        height: 6
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: golpe6
+      rect:
+        serializedVersion: 2
+        x: 1468
+        y: 210
+        width: 199
+        height: 271
+      alignment: 9
+      pivot: {x: 0.8819623, y: 0.036752734}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
