@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+// Scrpit para que la camara siga con la distancia apropiada al jugador
 
 public class CamFollow : MonoBehaviour {
-	public Transform player;
-	public float distanciax,distanciay,velocidad,shakex,shakey;
-	Vector3 newpos;
-
+	public Transform player; // Jugador activo
+	public float distanciax,distanciay,velocidad,shakex,shakey; //Distancia que mantiene en X & Y,Velocidad con la que sigue la jugador, Factor de alteracion enX & Y al simular Shake
+	Vector3 newpos; // Posicion actualizada
 
 	void Update () {
 		if(player!=null){

@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Script de bandera que se utiliza para obtener puntos
 public class Flag : MonoBehaviour {
 
-	public bool liberada;
-	public Transform Buscar;
-	public Vector3 IniPos;
-	public int teamid;
-	public BaseScript myBase;
+	public bool liberada; // La bandera esta liberada o sigue en la base
+	public Transform Buscar; // Posicion que buscara
+	public Vector3 IniPos; // Posicion inicial (para resetear)
+	public int teamid; // ID de equipo 
+	public BaseScript myBase; // Base de su equipo
 
 	void Start(){
 		IniPos = transform.position;

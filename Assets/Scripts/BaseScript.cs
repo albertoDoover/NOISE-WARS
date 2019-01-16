@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+// Script de la base aliada o enemiga
 
 public class BaseScript : MonoBehaviour {
-	public Image fillCircle;
-	public int team;
-	public float carga=0f;
-	bool cargando,puedecargar=true,protegido;
-	public Flag myFlag;
-	Personaje PersonajeContacto;
-	public GestorPartida Gestor;
+	public Image fillCircle; // Circulo de carga
+	public int team; // ID del equipo que propietario de esta base
+	public float carga=0f; // Porcentaje de carga para soltar bandera
+	bool cargando,puedecargar=true,protegido; // Estados
+	public Flag myFlag; // Bandera que arroja esta base
+	Personaje PersonajeContacto; // Personaje que esta en contacto con esta base
+	public GestorPartida Gestor; // Administrador de partida
 
 	void FixedUpdate(){		
 		if(myFlag.liberada){

@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// Botones que envan comandos a jugador
 public class BotonAccion : MonoBehaviour {
 
-	public Personaje PersonajeControlable;
-	public bool push;
-	public int code=0;
+	public Personaje PersonajeControlable; // Personaje activo del jugador actual
+	public bool push; // El boton ha sido presionado
+	public int code=0; // Codigo de comando
 
 	public void PushButton(){
 		if(!push && PersonajeControlable!=null){

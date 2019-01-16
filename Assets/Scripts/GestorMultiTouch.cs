@@ -1,16 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// Script para administrar los multiples toques que realiza el usuario de moviles a los botones
 public class GestorMultiTouch : MonoBehaviour {
 
-	public Transform[] Botones,Flechas;
-	List<Transform> BotonesActivos,FlechasActivas;
-	Vector3 touchworld;
-	Vector2 pos;
-	RaycastHit2D hit2d;
-	public bool activo;
-	public Personaje PersonajeActivo;
+	public Transform[] Botones,Flechas; // Botones en la interfaz
+	List<Transform> BotonesActivos,FlechasActivas; // Botones en la interfaz presionados
+	Vector3 touchworld; // Posicion de toque
+	Vector2 pos; // Posicion de toque en Vector2
+	RaycastHit2D hit2d; // Raycast emitido en busqueda de colision
+	public Personaje PersonajeActivo; // Personaje del jugador
 
 	void Start () {
 		if(!Application.isMobilePlatform){

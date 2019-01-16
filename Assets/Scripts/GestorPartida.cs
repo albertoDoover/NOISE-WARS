@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+// Script que establece las variables iniciales de la partida online y crea o busca la sala correspondiente
 public class GestorPartida : Photon.MonoBehaviour {
 
-	public Transform pos1,pos2;
-	PhotonView myplayer;
-	public Text Mensaje,MensajeSala;
-	public Text killsaliadas,killsenemigas,pointsaliados,pointsenemigos;
-	public int myteam,kills,deaths,points,loss;
+	public Transform pos1,pos2; // Punto inicial de equipo 1 y 2
+	PhotonView myplayer; // Mi jugador
+	public Text Mensaje,MensajeSala; // Textos de la interfaz
+	public Text killsaliadas,killsenemigas,pointsaliados,pointsenemigos; // Textos de la interfaz ubicados en la parte superior
+	public int myteam,kills,deaths,points,loss; // Conteo de muertes y puntos de ambos equipos
 
 	void Start () {
 		PhotonNetwork.sendRate = 100;
