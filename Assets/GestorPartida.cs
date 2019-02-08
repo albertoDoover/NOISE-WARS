@@ -58,6 +58,8 @@ public class GestorPartida : MonoBehaviourPunCallbacks {
 
 	}else{
 	PhotonNetwork.GameVersion="1";
+	PhotonNetwork.SendRate=50;
+	PhotonNetwork.SerializationRate=40;
 	PhotonNetwork.ConnectUsingSettings();
 	}
 	}
