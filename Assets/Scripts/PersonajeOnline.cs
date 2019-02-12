@@ -66,7 +66,7 @@ public class PersonajeOnline : MonoBehaviour,IPunObservable {
 		public Vector2 myPos;
 		public float myScale;
 		public bool atacando,corriendo;
-		public int numeroAtaque,HP,TipoMuerte;
+		public int numeroAtaque,HP,TipoMuerte,ConteoAtk,Subiendo;
 	}
 
 	void ActualizarPaquetePhoton(){
@@ -75,17 +75,25 @@ public class PersonajeOnline : MonoBehaviour,IPunObservable {
 		Pack.atacando=myPersonaje.atacando;
 		Pack.numeroAtaque=myPersonaje.numeroATK;
 		Pack.HP=Mathf.CeilToInt(myPersonaje.HP);
+		Pack.ConteoAtk=myPersonaje.ConteoAtk;
 		Pack.TipoMuerte=myPersonaje.TipoMuerte;
 		Pack.corriendo=myPersonaje.corriendo;
 	}
 
 	void RecibirPaquetePhoton(){
 		transform.localScale=new Vector3(Pack.myScale,transform.localScale.y,transform.localScale.z);
+		if(myRig.position.y>=PositionOnline.y){
+			myPersonaje.subiendo=false;
+		}else{
+			myPersonaje.subiendo=true;
+		}
 		if(!myPersonaje.atacando){
 			PositionOnline=Pack.myPos;
-
+			if(Pack.ConteoAtk!=myPersonaje.ConteoAtk){
+				myPersonaje.ConteoAtk=Pack.ConteoAtk;
+				myPersonaje.atacando=Pack.atacando;
+			}
 		} 
-		myPersonaje.atacando=Pack.atacando;
 		myPersonaje.numeroATK=Pack.numeroAtaque;
 		myPersonaje.corriendo=Pack.corriendo;
 		//myPersonaje.HP=Pack.HP;
@@ -97,7 +105,7 @@ public class PersonajeOnline : MonoBehaviour,IPunObservable {
 
 	void setPositionOnline(){
 		Vector2 interpolatePosition = Vector2.Lerp (myRig.position,PositionOnline,Lerp);
-		if(Vector2.Distance(myRig.position,Pack.myPos)>MaximaDistancia){
+		if(Vector2.Distance(myRig.position,PositionOnline)>MaximaDistancia){
 			interpolatePosition = PositionOnline;
 		}
 		myRig.position = interpolatePosition;

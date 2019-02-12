@@ -14,7 +14,7 @@ public class BotonAccion : MonoBehaviour {
 			if(code==-1){
 			PersonajeControlable.saltar();
 			}else if(code==0){
-			PersonajeControlable.ataquebasico ();
+			PersonajeControlable.EspecialUlti(code);
 			}else if(code==1){
 			PersonajeControlable.EspecialUlti(code);
 			}else if(code==2){

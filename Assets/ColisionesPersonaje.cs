@@ -19,20 +19,21 @@ public class ColisionesPersonaje : MonoBehaviour {
 	}
 
 	void Update(){
-	if(PhotonNetwork.IsMasterClient){
 		Colisiones=new Collider2D[0];
 		Colisiones=Physics2D.OverlapBoxAll(EjeColision.position,new Vector2(ColisionX,ColisionY),0f,Mascara.value);
 			for(int i=0;i<Colisiones.Length;i++){
 				if(Colisiones[i].GetComponent<AtaqueScript>().myCharacter!=null){
 					if(Colisiones[i].GetComponent<AtaqueScript>().myCharacter.name!=name){
 						if(!Colisiones[i].GetComponent<AtaqueScript>().ColisionesDetectadas.Contains(transform.name) || Colisiones[i].GetComponent<AtaqueScript>().Continuo){
-							Colisiones[i].GetComponent<AtaqueScript>().ColisionesDetectadas.Add(transform.name);
+						Colisiones[i].GetComponent<AtaqueScript>().ColisionesDetectadas.Add(transform.name);
+						myPersonaje.HitOn();
+						if(PhotonNetwork.IsMasterClient){
 							myPersonajeOnline.enviarDaño(Colisiones[i].GetComponent<AtaqueScript>().damage,Colisiones[i].GetComponent<AtaqueScript>().tipo);
+						}
 				}
 			  }
 			}
 		 }
-	  }
 	}
 
 

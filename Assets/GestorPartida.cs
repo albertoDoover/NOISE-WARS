@@ -27,9 +27,9 @@ public class GestorPartida : MonoBehaviourPunCallbacks {
 
 	public override void OnJoinedRoom(){
 	  if(PhotonNetwork.PlayerList.Length%2==0){
-		PhotonNetwork.Instantiate("Fantin",myPuntoCreacion.position,Quaternion.identity,0,null);
+		PhotonNetwork.Instantiate("Kalani",myPuntoCreacion.position,Quaternion.identity,0,null);
      }else{
-		PhotonNetwork.Instantiate("Fantin",myPuntoCreacion.position,Quaternion.identity,0,null);
+		PhotonNetwork.Instantiate("Kalani",myPuntoCreacion.position,Quaternion.identity,0,null);
      }
     }
 
@@ -58,8 +58,8 @@ public class GestorPartida : MonoBehaviourPunCallbacks {
 
 	}else{
 	PhotonNetwork.GameVersion="1";
-	PhotonNetwork.SendRate=50;
-	PhotonNetwork.SerializationRate=40;
+	PhotonNetwork.SendRate=40;
+	PhotonNetwork.SerializationRate=35;
 	PhotonNetwork.ConnectUsingSettings();
 	}
 	}

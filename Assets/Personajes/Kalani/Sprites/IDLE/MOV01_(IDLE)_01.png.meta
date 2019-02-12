@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 37666c7dde64f9b4aa97907f717db8e5
-timeCreated: 1549477321
+guid: 3c68ba5b81c063940ab9794f3177cb9f
+timeCreated: 1549944693
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
@@ -38,9 +38,9 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 9
-  spritePivot: {x: 0.3428362, y: 0.05226603}
+  spritePivot: {x: 0.308114, y: 0.06140346}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 200
+  spritePixelsToUnits: 175
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -94,7 +94,7 @@ TextureImporter:
     serializedVersion: 2
     sprites: []
     outline: []
-  spritePackingTag: Kalani
+  spritePackingTag: 
   userData: 
   assetBundleName: 
   assetBundleVariant: 
