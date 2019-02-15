@@ -23,6 +23,8 @@ public class Personaje : MonoBehaviour {
 	float gravedad; // Fuerza con la que cae
 	public float HPMAX,HP; // Vida maxima, Vida actual
 	public GameObject myFicha;
+	public Vector2 OffSetImpulse;
+	public float FactorDaño=1f;
 
 	#region Start Update //Metodos basicos de Unity
 	void Awake(){
@@ -32,15 +34,15 @@ public class Personaje : MonoBehaviour {
 
 	void Start () {		
 		MyCanvas.worldCamera = Camera.main;
-		MyName= MyName+Mathf.RoundToInt(Random.value*99).ToString();
+		MyName= MyName+Mathf.RoundToInt(Random.value*99).ToString()+Mathf.RoundToInt(Random.value*99).ToString();
 		transform.name = MyName;
 		Instantiate(myFicha).GetComponent<FichaMapa_Interfaz>().myPersonaje=transform;
 	}
 
 	void Update () {
 		BarraVida.fillAmount = HP / HPMAX;
-			tocasuelo = Physics2D.OverlapBox (comprobadorsuelo.position, new Vector2(RadioSuelo,0.05f),0f, mascarasuelo);
-			wiggle=Physics2D.OverlapCircle (ComprobadorSueloWiggle.position, RadioWiggle, mascarasuelo);
+		tocasuelo=Physics2D.OverlapBox (comprobadorsuelo.position, new Vector2(RadioSuelo,0.05f),0f, mascarasuelo);
+		wiggle=Physics2D.OverlapCircle (ComprobadorSueloWiggle.position, RadioWiggle, mascarasuelo);
 				
 		if (GetComponent<PersonajeOnline>().isMine) {
 
@@ -75,9 +77,9 @@ public class Personaje : MonoBehaviour {
 				saltar ();
 				}
 				
-			if (Input.GetKey (KeyCode.LeftArrow) && !atacando) {
+			if (Input.GetKey (KeyCode.LeftArrow) && !atacando && OffSetImpulse==Vector2.zero) {
 			    MoveLeft ();
-			} else if (Input.GetKey (KeyCode.RightArrow) && !atacando) {
+			} else if (Input.GetKey (KeyCode.RightArrow) && !atacando && OffSetImpulse==Vector2.zero) {
 				MoveRight ();
 			} else if(!Application.isMobilePlatform){
 				MoveZero ();
@@ -100,7 +102,7 @@ public class Personaje : MonoBehaviour {
 	public  void MoveLeft(){
 		if (!noqueado && !atacando && HP > 0) {
 			corriendo = true;
-			rig.velocity = new Vector2 (-vel, rig.velocity.y);
+			rig.velocity = (new Vector2 (-vel, rig.velocity.y))+OffSetImpulse;
 			transform.localScale = new Vector3 (-sizex, transform.localScale.y, 0f);
 		} else {
 			MoveZero ();
@@ -110,7 +112,7 @@ public class Personaje : MonoBehaviour {
 	public void MoveRight(){
 		if (!noqueado && !atacando && HP > 0) {
 			corriendo = true;
-			rig.velocity = new Vector2 (vel, rig.velocity.y);
+			rig.velocity = (new Vector2 (vel, rig.velocity.y))+OffSetImpulse;
 			transform.localScale = new Vector3 (sizex, transform.localScale.y, 0f);
 		} else {
 			MoveZero ();
@@ -119,7 +121,7 @@ public class Personaje : MonoBehaviour {
 
 	public void MoveZero(){
 		corriendo = false;
-		rig.velocity = new Vector2 (0f, rig.velocity.y);
+		rig.velocity = (new Vector2 (0f, rig.velocity.y))+OffSetImpulse;
 	}
 
 	public void EspecialUlti(int code){
@@ -189,7 +191,7 @@ public class Personaje : MonoBehaviour {
 		numeroATK = -1;
 	}
 
-	public void ResolverDaño(int daño, int tipo){
+	public void ResolverDaño(float daño, int tipo){
 		if(!tocasuelo){
 			TipoMuerte=-1;
 		}else{
@@ -201,23 +203,21 @@ public class Personaje : MonoBehaviour {
 				HP=0;
 			}else{
 				HP-=daño;
-				if(!atacando && !subiendo && !hit){
-				hit=true;
-				Invoke("HitOff",0.05f);
-				}
 			}
 		}
 
 	}
 
 	public void HitOn(){
-		if(!atacando && !subiendo && !hit){
+		if(!hit){
 			hit=true;
 			Invoke("HitOff",0.05f);
 		}
+			spi.color= new Color(248f/255f,162f/255f,107f/255f,1f);
 	}
 
 	void HitOff(){
+		spi.color= new Color(1f,1f,1f,1f);
 		hit=false;
 	}
 
@@ -226,6 +226,7 @@ public class Personaje : MonoBehaviour {
 		if(GetComponent<PersonajeOnline>().isMine){
 			Camera.main.GetComponent<CamFollow>().player=null;
 		}
+		GetComponent<BoxCollider2D>().enabled=false;
 		if(transform.localScale.z>=0){
 			rig.AddForce(new Vector2(-20f,30f),ForceMode2D.Impulse);
 		}else{
@@ -242,6 +243,15 @@ public class Personaje : MonoBehaviour {
 
 	void Continuar(){
 		anim.speed=1f;
+	}
+
+	public void ActivarImpulso(float tiempo,Vector2 Offset){
+		OffSetImpulse = Offset;
+		Invoke("DesactivarImpulso",tiempo);
+	}
+
+	public void DesactivarImpulso(){
+		OffSetImpulse= new Vector2(0f,0f);
 	}
 	#endregion
 }

@@ -26,6 +26,7 @@ public class PersonajeOnline : MonoBehaviour,IPunObservable {
 		myPersonaje=GetComponent<Personaje>();
 		if(isMine){			
 			Camera.main.GetComponent<CamFollow>().player=transform;
+			myPersonaje.spi.sortingOrder=10;
 		}else{
 			myRig.gravityScale=0f;
 		}
@@ -33,7 +34,7 @@ public class PersonajeOnline : MonoBehaviour,IPunObservable {
 	}
 
 	void Update(){
-		if(!isMine){		
+		if(!isMine && myPersonaje.HP>0){		
 			setPositionOnline();
 		}
 	}
@@ -50,12 +51,12 @@ public class PersonajeOnline : MonoBehaviour,IPunObservable {
 		}
 	}
 
-	public void enviarDaño(int daño,int tipo){
+	public void enviarDaño(float daño,int tipo){
 		myPhotonView.RPC("recibirDaño",RpcTarget.All,daño,tipo);
 	}
 
 	[PunRPC]
-	public void recibirDaño(int daño,int tipo){
+	public void recibirDaño(float daño,int tipo){
 		myPersonaje.ResolverDaño(daño,tipo);
 	}
 
@@ -89,14 +90,15 @@ public class PersonajeOnline : MonoBehaviour,IPunObservable {
 		}
 		if(!myPersonaje.atacando){
 			PositionOnline=Pack.myPos;
-			if(Pack.ConteoAtk!=myPersonaje.ConteoAtk){
+			if(Pack.ConteoAtk>myPersonaje.ConteoAtk && Pack.atacando){
 				myPersonaje.ConteoAtk=Pack.ConteoAtk;
+				myPersonaje.atacando=Pack.atacando;
+			}else if(!Pack.atacando){
 				myPersonaje.atacando=Pack.atacando;
 			}
 		} 
 		myPersonaje.numeroATK=Pack.numeroAtaque;
 		myPersonaje.corriendo=Pack.corriendo;
-		//myPersonaje.HP=Pack.HP;
 		myPersonaje.TipoMuerte=Pack.TipoMuerte;
 	}
 	#endregion
