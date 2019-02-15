@@ -44,7 +44,7 @@ public class Personaje : MonoBehaviour {
 		tocasuelo=Physics2D.OverlapBox (comprobadorsuelo.position, new Vector2(RadioSuelo,0.05f),0f, mascarasuelo);
 		wiggle=Physics2D.OverlapCircle (ComprobadorSueloWiggle.position, RadioWiggle, mascarasuelo);
 				
-		if (GetComponent<PersonajeOnline>().isMine) {
+		if (GetComponent<PersonajeOnline>().isMine && HP>0) {
 
 				if (rig.velocity.y > 0.1f) {
 					subiendo = true;
@@ -227,10 +227,11 @@ public class Personaje : MonoBehaviour {
 			Camera.main.GetComponent<CamFollow>().player=null;
 		}
 		GetComponent<BoxCollider2D>().enabled=false;
+		rig.gravityScale=0f;
 		if(transform.localScale.z>=0){
-			rig.AddForce(new Vector2(-20f,30f),ForceMode2D.Impulse);
+			rig.AddForce(new Vector2(-30f,100f),ForceMode2D.Impulse);
 		}else{
-			rig.AddForce(new Vector2(20f,30f),ForceMode2D.Impulse);
+			rig.AddForce(new Vector2(30f,100f),ForceMode2D.Impulse);
 		}
 	}
 

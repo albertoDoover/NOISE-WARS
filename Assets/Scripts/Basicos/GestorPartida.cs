@@ -27,9 +27,9 @@ public class GestorPartida : MonoBehaviourPunCallbacks {
 
 	public override void OnJoinedRoom(){
 	  if(PhotonNetwork.PlayerList.Length%2==0){
-		PhotonNetwork.Instantiate("Kalani",myPuntoCreacion.position,Quaternion.identity,0,null);
-     }else{
 		PhotonNetwork.Instantiate("Fantin",myPuntoCreacion.position,Quaternion.identity,0,null);
+     }else{
+		PhotonNetwork.Instantiate("Kalani",myPuntoCreacion.position,Quaternion.identity,0,null);
      }
     }
 
