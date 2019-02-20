@@ -8,6 +8,7 @@ public class Kalani_Personaje : MonoBehaviour {
 	public Transform Ulti_Point,Especial1_Point,Especial2_Point;
 	public Personaje myPersonaje;
 	Transform Creacion;
+	public float VelocityEspecial1;
 
 	public void LanzarUlti_Kalani(){
 		Creacion=Instantiate(Ulti,Ulti_Point.position,Ulti.transform.rotation).transform;
@@ -22,6 +23,9 @@ public class Kalani_Personaje : MonoBehaviour {
 		Creacion=Instantiate(Especial1,Especial1_Point.position,Especial1.transform.rotation).transform;
 		if(transform.localScale.x<0){
 			Creacion.localScale=new Vector3(Creacion.localScale.x*-1,Creacion.localScale.y,Creacion.localScale.z);
+			Creacion.GetComponent<Rigidbody2D>().velocity=new Vector2(VelocityEspecial1*-1,0f);
+		}else{
+			Creacion.GetComponent<Rigidbody2D>().velocity=new Vector2(VelocityEspecial1,0f);
 		}
 		Creacion.GetComponent<AtaqueScript>().myCharacter=myPersonaje;
 	}

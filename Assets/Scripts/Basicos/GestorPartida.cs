@@ -8,17 +8,18 @@ using ExitGames.Client.Photon;
 
 public class GestorPartida : MonoBehaviourPunCallbacks {
 
-	public bool con=false;
+	public bool IsConnected=false;
 	public int myPing;
-	public Text myPingText;
+	public Text myPingText,myKDAText;
 	public Transform myPuntoCreacion;
 	public string myRegion;
+	public GameObject myPlayer,Seleccion;
 
 	void Awake(){
 		PhotonNetwork.AutomaticallySyncScene=true;
 	}
 	void OnFailedToConnectToPhoton(){
-	Debug.Log("fdsfsdsf");
+		PhotonNetwork.ConnectUsingSettings();
 	}
 
 	public override void OnConnectedToMaster(){
@@ -26,11 +27,17 @@ public class GestorPartida : MonoBehaviourPunCallbacks {
 	}
 
 	public override void OnJoinedRoom(){
-	  if(PhotonNetwork.PlayerList.Length%2==0){
-		PhotonNetwork.Instantiate("Fantin",myPuntoCreacion.position,Quaternion.identity,0,null);
-     }else{
-		PhotonNetwork.Instantiate("Kalani",myPuntoCreacion.position,Quaternion.identity,0,null);
-     }
+	  Seleccion.SetActive(true);
+    }
+
+    public void SeleccionarFantin(){
+		Seleccion.SetActive(false);
+		myPlayer=PhotonNetwork.Instantiate("Fantin",myPuntoCreacion.position,Quaternion.identity,0,null);
+    }
+
+	public void SeleccionarKalani(){
+		Seleccion.SetActive(false);
+		myPlayer=PhotonNetwork.Instantiate("Kalani",myPuntoCreacion.position,Quaternion.identity,0,null);
     }
 
 	public override void OnJoinRoomFailed(short returnCode, string message){
@@ -42,26 +49,21 @@ public class GestorPartida : MonoBehaviourPunCallbacks {
     }
 
 	void Update(){
-		con=PhotonNetwork.IsConnected;
-		if(PhotonNetwork.CurrentRoom!=null && con){
+		IsConnected=PhotonNetwork.IsConnected;
+		if(PhotonNetwork.CurrentRoom!=null && IsConnected){
 		myPing = PhotonNetwork.GetPing();
 		myRegion=PhotonNetwork.CloudRegion;
-		myPingText.text=myRegion.ToString()+" : "+myPing.ToString();
+		myPingText.text="Ping:"+myPing.ToString()+"ms";
 		}else{
 		myPingText.text="Desconectado";
 		}
-
 	}
 
 	void Start(){
-	if(PhotonNetwork.IsConnected){
-
-	}else{
 	PhotonNetwork.GameVersion="1";
 	PhotonNetwork.SendRate=50;
 	PhotonNetwork.SerializationRate=45;
 	PhotonNetwork.ConnectUsingSettings();
-	}
 	}
 
 }

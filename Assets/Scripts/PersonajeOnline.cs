@@ -8,7 +8,7 @@ public class PersonajeOnline : MonoBehaviour,IPunObservable {
 
 	public bool con=false;
 	public int myPing;
-	PhotonView myPhotonView;
+	public PhotonView myPhotonView;
 	public bool isMine;
 	Rigidbody2D myRig;
 	Personaje myPersonaje;
@@ -51,15 +51,14 @@ public class PersonajeOnline : MonoBehaviour,IPunObservable {
 		}
 	}
 
-	public void enviarDaño(float daño,int tipo){
-		myPhotonView.RPC("recibirDaño",RpcTarget.All,daño,tipo);
+	public void enviarDaño(float daño,int tipo,string Atacante){
+		myPhotonView.RPC("recibirDaño",RpcTarget.All,daño,tipo,Atacante);
 	}
 
 	[PunRPC]
-	public void recibirDaño(float daño,int tipo){
-		myPersonaje.ResolverDaño(daño,tipo);
+	public void recibirDaño(float daño,int tipo,string Atacante){
+		myPersonaje.ResolverDaño(daño,tipo,Atacante);
 	}
-
 	#endregion
 
 	#region Clases auxiliares

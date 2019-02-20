@@ -31,14 +31,13 @@ public class ColisionesPersonaje : MonoBehaviour {
 							Colisiones[i].GetComponent<AtaqueScript>().AttackEffect(transform);
 						}
 						if(PhotonNetwork.IsMasterClient){
-							myPersonajeOnline.enviarDaño(Colisiones[i].GetComponent<AtaqueScript>().damage*myPersonaje.FactorDaño,Colisiones[i].GetComponent<AtaqueScript>().tipo);
+							myPersonajeOnline.enviarDaño(Colisiones[i].GetComponent<AtaqueScript>().damage*myPersonaje.FactorDaño,Colisiones[i].GetComponent<AtaqueScript>().tipo,Colisiones[i].GetComponent<AtaqueScript>().myCharacter.name);
 						}
 				}
 			  }
 			}
 		}
 	}
-
 
 	#region Colisiones
 	void OnTriggerEnter2D(Collider2D c){
@@ -57,6 +56,4 @@ public class ColisionesPersonaje : MonoBehaviour {
 		}
 	}
 	#endregion
-
-
 }
