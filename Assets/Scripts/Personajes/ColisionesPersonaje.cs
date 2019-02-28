@@ -23,7 +23,7 @@ public class ColisionesPersonaje : MonoBehaviour {
 		Colisiones=Physics2D.OverlapBoxAll(EjeColision.position,new Vector2(CajaColision.size.x,CajaColision.size.y),0f,Mascara.value);
 			for(int i=0;i<Colisiones.Length;i++){
 				if(Colisiones[i].GetComponent<AtaqueScript>().myCharacter!=null){
-					if(Colisiones[i].GetComponent<AtaqueScript>().myCharacter.name!=name){
+				if(Colisiones[i].GetComponent<AtaqueScript>().myCharacter.name!=name && Colisiones[i].GetComponent<AtaqueScript>().myCharacter.teamid!=GetComponent<Personaje>().teamid){
 						if(!Colisiones[i].GetComponent<AtaqueScript>().ColisionesDetectadas.Contains(transform.name) || Colisiones[i].GetComponent<AtaqueScript>().Continuo){
 						Colisiones[i].GetComponent<AtaqueScript>().ColisionesDetectadas.Add(transform.name);
 						myPersonaje.HitOn();

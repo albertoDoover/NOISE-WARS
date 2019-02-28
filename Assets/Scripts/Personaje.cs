@@ -23,7 +23,7 @@ public class Personaje : MonoBehaviour {
 	float gravedad; // Fuerza con la que cae
 	public float HPMAX,HP; // Vida maxima, Vida actual
 	public GameObject myFicha;
-	public Vector2 OffSetImpulse;
+	bool BlockMove;
 	public float FactorDaño=1f;
 	public Vector3 PosicionInicial;
 	GestorPartida myGestorPartida;
@@ -57,8 +57,8 @@ public class Personaje : MonoBehaviour {
 			gameObject.layer=9;
 		}
 
-		if (GetComponent<PersonajeOnline>().isMine && HP>0 && myGestorPartida.IsConnected) {			
-			if (!subiendo && tocasuelo) {
+		if (GetComponent<PersonajeOnline>().isMine && HP>0 && !BlockMove) {			
+			if (!subiendo && tocasuelo ) {
 				SaltoDisp=2;
 					if (!atacando) {					
 						if (Input.GetKey(KeyCode.S)) {
@@ -80,9 +80,9 @@ public class Personaje : MonoBehaviour {
 				saltar ();
 				}
 				
-			if (Input.GetKey (KeyCode.LeftArrow) && !atacando && OffSetImpulse==Vector2.zero) {
+			if (Input.GetKey (KeyCode.LeftArrow) && !atacando) {
 			    MoveLeft ();
-			} else if (Input.GetKey (KeyCode.RightArrow) && !atacando && OffSetImpulse==Vector2.zero) {
+			} else if (Input.GetKey (KeyCode.RightArrow) && !atacando) {
 				MoveRight ();
 			} else if(!Application.isMobilePlatform){
 				MoveZero ();
@@ -104,7 +104,7 @@ public class Personaje : MonoBehaviour {
 	public  void MoveLeft(){
 		if (!noqueado && !atacando && HP > 0) {
 			corriendo = true;
-			rig.velocity = (new Vector2 (-vel, rig.velocity.y))+OffSetImpulse;
+			rig.velocity = (new Vector2 (-vel, rig.velocity.y));
 			transform.localScale = new Vector3 (-sizex, transform.localScale.y, 0f);
 		} else {
 			MoveZero ();
@@ -114,7 +114,7 @@ public class Personaje : MonoBehaviour {
 	public void MoveRight(){
 		if (!noqueado && !atacando && HP > 0) {
 			corriendo = true;
-			rig.velocity = (new Vector2 (vel, rig.velocity.y))+OffSetImpulse;
+			rig.velocity = (new Vector2 (vel, rig.velocity.y));
 			transform.localScale = new Vector3 (sizex, transform.localScale.y, 0f);
 		} else {
 			MoveZero ();
@@ -123,7 +123,7 @@ public class Personaje : MonoBehaviour {
 
 	public void MoveZero(){
 		corriendo = false;
-		rig.velocity = (new Vector2 (0f, rig.velocity.y))+OffSetImpulse;
+		rig.velocity = (new Vector2 (0f, rig.velocity.y));
 	}
 
 	public void EspecialUlti(int code){
@@ -147,9 +147,10 @@ public class Personaje : MonoBehaviour {
 	}
 
 	void Revivir(){
-		if (mine) {
+		if (GetComponent<PersonajeOnline>().isMine) {
 			Camera.main.GetComponent<CamFollow> ().player = transform;
 		}
+		GetComponent<BoxCollider2D>().enabled=true;
 		atacando=false;
 		hit=false;
 		rig.freezeRotation = true;
@@ -164,6 +165,7 @@ public class Personaje : MonoBehaviour {
 
 	#region Efectos
 	public void DeathSetup(){
+		rig.velocity=Vector2.zero;
 		Invoke ("Revivir",3f);
 	}
 
@@ -227,15 +229,34 @@ public class Personaje : MonoBehaviour {
 	void Continuar(){
 		anim.speed=1f;
 	}
-
-	public void ActivarImpulso(float tiempo,Vector2 Offset){
-		OffSetImpulse = Offset;
-		Invoke("DesactivarImpulso",tiempo);
+	#endregion EfectosEnemigos
+	public IEnumerator Pulling(float PulseSpeed,Vector2 Impulse){
+		BlockMove=true;
+		rig.velocity=Vector2.zero;
+		rig.gravityScale=0f;
+		while(Vector2.Distance(rig.position,Impulse)>1f){
+			rig.position=Vector2.Lerp(rig.position,Impulse,PulseSpeed);
+			yield return null;
+		}
+		yield return null;
+		ResetBlockMove();
 	}
 
-	public void DesactivarImpulso(){
-		OffSetImpulse= new Vector2(0f,0f);
+	public void Pulsing(Vector2 Force,float Time){
+		BlockMove=true;
+		rig.velocity=Vector2.zero;
+		rig.gravityScale=0f;
+		rig.velocity=Force;
+		Invoke("ResetBlockMove",Time);
 	}
+
+	void ResetBlockMove(){
+		rig.gravityScale=gravedad;
+		BlockMove=false;
+	}
+
+	#region
+
 	#endregion
 
 	#region ResolucionDaño
@@ -252,7 +273,7 @@ public class Personaje : MonoBehaviour {
 		if(HP>0){			
 			if(daño>=HP){
 				HP=0;
-				Invoke("Revivir",3f);
+				Invoke("Revivir",10f);
 				Ejecutor=NombreAtacante;
 				if(Photon.Pun.PhotonNetwork.IsMasterClient){
 				GameObject.Find(Ejecutor).GetComponent<Score>().CallUpdateKDA(1,0,0);

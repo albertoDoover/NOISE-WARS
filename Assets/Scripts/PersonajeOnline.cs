@@ -16,6 +16,8 @@ public class PersonajeOnline : MonoBehaviour,IPunObservable {
 	public Text myPing2;
 	public PaquetePhoton Pack;
 	Vector2 PositionOnline;
+	public int TeamID;
+	GestorPartida Gestor;
 
 	#region Metodos Basicos
 	void Awake(){
@@ -24,11 +26,22 @@ public class PersonajeOnline : MonoBehaviour,IPunObservable {
 		isMine=myPhotonView.IsMine;
 		myRig=GetComponent<Rigidbody2D>();
 		myPersonaje=GetComponent<Personaje>();
+		Gestor=GameObject.Find("GestorPartida").GetComponent<GestorPartida>();
 		if(isMine){			
 			Camera.main.GetComponent<CamFollow>().player=transform;
 			myPersonaje.spi.sortingOrder=10;
+			myPersonaje.mine=isMine;
 		}else{
 			myRig.gravityScale=0f;
+		}
+		if(myPhotonView.OwnerActorNr%2==0){
+			TeamID=1;
+			GetComponent<Personaje>().teamid=1;
+			transform.position=GameObject.Find("Posicion1").transform.position;
+		}else{
+			TeamID=2;
+			GetComponent<Personaje>().teamid=2;
+			transform.position=GameObject.Find("Posicion2").transform.position;
 		}
 		ActualizarPaquetePhoton();
 	}
@@ -52,12 +65,26 @@ public class PersonajeOnline : MonoBehaviour,IPunObservable {
 	}
 
 	public void enviarDaño(float daño,int tipo,string Atacante){
-		myPhotonView.RPC("recibirDaño",RpcTarget.All,daño,tipo,Atacante);
+		myPhotonView.RPC("recibirDaño",RpcTarget.AllBuffered,daño,tipo,Atacante);
 	}
 
 	[PunRPC]
 	public void recibirDaño(float daño,int tipo,string Atacante){
 		myPersonaje.ResolverDaño(daño,tipo,Atacante);
+	}
+
+	public void enviarDañoTorre(int daño, int code){
+		myPhotonView.RPC("recibirDañoTorre",RpcTarget.AllBuffered,daño,code);
+	}
+
+	[PunRPC]
+	public void recibirDañoTorre(int daño, int code){
+		Gestor.DañoTorre(daño,code);
+	}
+
+	[PunRPC]
+	public void setVictoriaOnline(int Team){
+		Gestor.setVictoria(Team);
 	}
 	#endregion
 

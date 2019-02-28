@@ -9,10 +9,11 @@ public class AttackGroundCheck : MonoBehaviour {
 	bool Activado=true;
 	public ParticleSystem[] SistemasParticulas;
 	public LayerMask Suelo;
-
+	Collider2D[] Colisiones;
 	void Update () {
 	if(Activado){
-		if(!Physics2D.OverlapCircle(Check.position,Radio,Suelo)){
+	Colisiones = Physics2D.OverlapCircleAll(Check.position,Radio,Suelo);
+		if(Colisiones.Length==0){
 			Activado=false;
 				for(int i=0;i<SistemasParticulas.Length;i++){
 					SistemasParticulas[i].Stop();

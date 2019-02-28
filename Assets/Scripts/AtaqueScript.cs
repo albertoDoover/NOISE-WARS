@@ -9,7 +9,7 @@ public class AtaqueScript : MonoBehaviour {
 	public int damage,tipo; // Cantidad de daño que otorga
 	public List<string> ColisionesDetectadas; // Lista de objetos con los que ha colisionado para no repetir
 	public float LifeTime,StartTime;
-	public float Fuerza;
+	public float Tiempo,Distancia;
 
 	void Start(){
 		ColisionesDetectadas=new List<string>();
@@ -35,9 +35,9 @@ public class AtaqueScript : MonoBehaviour {
 
 	public void AttackEffect(Transform Personaje){
 		if(Pull){
-			Personaje.GetComponent<Personaje>().ActivarImpulso(1f,(Personaje.position-myCharacter.transform.position).normalized*Fuerza);
+			StartCoroutine(Personaje.GetComponent<Personaje>().Pulling(Tiempo,myCharacter.transform.position));
 		}else if(Push){
-			Personaje.GetComponent<Personaje>().ActivarImpulso(1f,(myCharacter.transform.position-Personaje.position).normalized*Fuerza);
+			Personaje.GetComponent<Personaje>().Pulsing((Personaje.transform.position-myCharacter.transform.position).normalized*Distancia,Tiempo);
 		}
 	}
 }

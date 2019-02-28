@@ -10,14 +10,46 @@ public class GestorPartida : MonoBehaviourPunCallbacks {
 
 	public bool IsConnected=false;
 	public int myPing;
-	public Text myPingText,myKDAText;
-	public Transform myPuntoCreacion;
+	public Text myPingText,myKDAText,MensajePartida;
+	public Transform myPuntoCreacion,Interfaz;
 	public string myRegion;
 	public GameObject myPlayer,Seleccion;
+	public TowerScript[] Torres;
+	public int EquipoVictoria=-1; 
+	float DistanciaCamara=13.6f;
+	public CAM CamaraPrincipal;
 
+	#region Funciones Basicas
 	void Awake(){
 		PhotonNetwork.AutomaticallySyncScene=true;
 	}
+
+	void Start(){
+		PhotonNetwork.GameVersion="1";
+		PhotonNetwork.SendRate=50;
+		PhotonNetwork.SerializationRate=45;
+		PhotonNetwork.ConnectUsingSettings();
+	}
+
+	void Update(){
+		if(Input.GetAxis("Mouse ScrollWheel")>0 && DistanciaCamara<17f){
+			DistanciaCamara=DistanciaCamara+0.25f;
+		}else if(Input.GetAxis("Mouse ScrollWheel")<0 && DistanciaCamara>10f){
+			DistanciaCamara=DistanciaCamara-0.25f;
+		}
+
+		IsConnected=PhotonNetwork.IsConnected;
+		if(PhotonNetwork.CurrentRoom!=null && IsConnected){
+		myPing = PhotonNetwork.GetPing();
+		myRegion=PhotonNetwork.CloudRegion;
+		myPingText.text="Ping:"+myPing.ToString()+"ms";
+		}else{
+		myPingText.text="Desconectado";
+		}
+	}
+	#endregion
+
+	#region Funciones Photon
 	void OnFailedToConnectToPhoton(){
 		PhotonNetwork.ConnectUsingSettings();
 	}
@@ -47,23 +79,36 @@ public class GestorPartida : MonoBehaviourPunCallbacks {
 		TypedLobby myLobby = new TypedLobby();
 		PhotonNetwork.JoinOrCreateRoom("ER",opcionesRoom,myLobby,null);
     }
+	#endregion
 
-	void Update(){
-		IsConnected=PhotonNetwork.IsConnected;
-		if(PhotonNetwork.CurrentRoom!=null && IsConnected){
-		myPing = PhotonNetwork.GetPing();
-		myRegion=PhotonNetwork.CloudRegion;
-		myPingText.text="Ping:"+myPing.ToString()+"ms";
+	#region Torres
+	public void DañoTorre(int Daño,int Code){
+		Torres[Code].ReportarDañoTorre(Daño);
+	}
+
+	void FixedUpdate(){
+		Interfaz.localScale=new Vector3(DistanciaCamara/13.6f,DistanciaCamara/13.6f,1f);
+		CamaraPrincipal.orthographicSize=DistanciaCamara;
+		if(PhotonNetwork.IsMasterClient && EquipoVictoria==-1){
+			if((Torres[0].HP)<=0){
+				myPlayer.GetComponent<PhotonView>().RPC("setVictoriaOnline",RpcTarget.AllBuffered,2);
+			}else if((Torres[7].HP)<=0){{
+				myPlayer.GetComponent<PhotonView>().RPC("setVictoriaOnline",RpcTarget.AllBuffered,1);
+			}
+		}
+	  }
+	}
+
+	public void setVictoria(int Team){
+	if(EquipoVictoria==-1){
+		EquipoVictoria=Team;
+		if(myPlayer.GetComponent<PersonajeOnline>().TeamID==Team){
+			MensajePartida.text="VICTORIA";
 		}else{
-		myPingText.text="Desconectado";
+			MensajePartida.text="DERROTA";
 		}
 	}
-
-	void Start(){
-	PhotonNetwork.GameVersion="1";
-	PhotonNetwork.SendRate=50;
-	PhotonNetwork.SerializationRate=45;
-	PhotonNetwork.ConnectUsingSettings();
 	}
+	#endregion
 
 }
