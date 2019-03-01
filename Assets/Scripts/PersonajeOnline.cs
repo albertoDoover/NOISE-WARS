@@ -7,16 +7,16 @@ using UnityEngine.UI;
 public class PersonajeOnline : MonoBehaviour,IPunObservable {
 
 	public bool con=false;
-	public int myPing;
 	public PhotonView myPhotonView;
 	public bool isMine;
 	Rigidbody2D myRig;
 	Personaje myPersonaje;
 	public float Lerp=0.3f,MaximaDistancia=5f;
-	public Text myPing2;
+	public Text NombreTexto;
 	public PaquetePhoton Pack;
 	Vector2 PositionOnline;
 	public int TeamID;
+	string MyName; // Nombre de jugador
 	GestorPartida Gestor;
 
 	#region Metodos Basicos
@@ -27,13 +27,6 @@ public class PersonajeOnline : MonoBehaviour,IPunObservable {
 		myRig=GetComponent<Rigidbody2D>();
 		myPersonaje=GetComponent<Personaje>();
 		Gestor=GameObject.Find("GestorPartida").GetComponent<GestorPartida>();
-		if(isMine){			
-			Camera.main.GetComponent<CamFollow>().player=transform;
-			myPersonaje.spi.sortingOrder=10;
-			myPersonaje.mine=isMine;
-		}else{
-			myRig.gravityScale=0f;
-		}
 		if(myPhotonView.OwnerActorNr%2==0){
 			TeamID=1;
 			GetComponent<Personaje>().teamid=1;
@@ -43,7 +36,28 @@ public class PersonajeOnline : MonoBehaviour,IPunObservable {
 			GetComponent<Personaje>().teamid=2;
 			transform.position=GameObject.Find("Posicion2").transform.position;
 		}
+		if(isMine){			
+			Camera.main.GetComponent<CamFollow>().player=transform;
+			myPersonaje.spi.sortingOrder=10;
+			myPersonaje.mine=isMine;
+			NombreTexto.GetComponent<Outline>().effectColor=Color.white;
+		}else{
+			myRig.gravityScale=0f;
+		}
+
 		ActualizarPaquetePhoton();
+	}
+
+	void FixedUpdate(){
+		if(isMine){
+		NombreTexto.GetComponent<Outline>().effectColor=Color.white;
+		}else if(Gestor.myPlayer!=null){
+			if(TeamID==Gestor.myPlayer.GetComponent<PersonajeOnline>().TeamID){
+				NombreTexto.GetComponent<Outline>().effectColor=Color.blue;
+			}else{
+				NombreTexto.GetComponent<Outline>().effectColor=Color.red;
+			}
+		}
 	}
 
 	void Update(){
@@ -86,6 +100,17 @@ public class PersonajeOnline : MonoBehaviour,IPunObservable {
 	public void setVictoriaOnline(int Team){
 		Gestor.setVictoria(Team);
 	}
+
+	public void SetNombre(string Nombre){
+		myPhotonView.RPC("setNombreOnline",RpcTarget.AllBuffered,Nombre);
+	}
+
+	[PunRPC]
+	void setNombreOnline(string Nombre){
+		MyName=Nombre;
+		NombreTexto.text=MyName;
+	}
+
 	#endregion
 
 	#region Clases auxiliares

@@ -18,6 +18,8 @@ public class GestorPartida : MonoBehaviourPunCallbacks {
 	public int EquipoVictoria=-1; 
 	float DistanciaCamara=13.6f;
 	public CAM CamaraPrincipal;
+	string NombrePlayer;
+	public InputField NombrePlayerText;
 
 	#region Funciones Basicas
 	void Awake(){
@@ -25,6 +27,7 @@ public class GestorPartida : MonoBehaviourPunCallbacks {
 	}
 
 	void Start(){
+		SetNombreGenerico();
 		PhotonNetwork.GameVersion="1";
 		PhotonNetwork.SendRate=50;
 		PhotonNetwork.SerializationRate=45;
@@ -63,15 +66,25 @@ public class GestorPartida : MonoBehaviourPunCallbacks {
     }
 
     public void SeleccionarFantin(){
+		if(NombrePlayerText.text!=""){
 		Seleccion.SetActive(false);
 		myPlayer=PhotonNetwork.Instantiate("Fantin",myPuntoCreacion.position,Quaternion.identity,0,null);
-    }
+		SetName();
+		}
+     }
 
 	public void SeleccionarKalani(){
+		if(NombrePlayerText.text!=""){
 		Seleccion.SetActive(false);
 		myPlayer=PhotonNetwork.Instantiate("Kalani",myPuntoCreacion.position,Quaternion.identity,0,null);
-    }
+		SetName();
+		}
+      }
 
+    void SetName(){
+    	myPlayer.GetComponent<PersonajeOnline>().SetNombre(NombrePlayer);
+    }
+    
 	public override void OnJoinRoomFailed(short returnCode, string message){
 		RoomOptions opcionesRoom = new RoomOptions();
 		opcionesRoom.MaxPlayers=3;
@@ -108,6 +121,17 @@ public class GestorPartida : MonoBehaviourPunCallbacks {
 			MensajePartida.text="DERROTA";
 		}
 	}
+	}
+	#endregion
+
+	#region NombreJugador
+	void SetNombreGenerico(){
+		NombrePlayer="Player"+(Mathf.RoundToInt(9999*Random.value)).ToString();
+		NombrePlayerText.text=NombrePlayer;
+	}
+
+	public void SetNombreJugador(){
+		NombrePlayer=NombrePlayerText.text;
 	}
 	#endregion
 

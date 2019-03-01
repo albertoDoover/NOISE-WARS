@@ -19,7 +19,6 @@ public class Personaje : MonoBehaviour {
 	public int numeroATK=0,TipoMuerte=0,ConteoAtk=0; // Patron del ataque, Ultimo tipo de herida, Numero de ataque
 	public float Salto; // Velocidad al subir
 	int SaltoDisp=0; // Conteo para doble salto
-	string MyName; // Nombre de jugador
 	float gravedad; // Fuerza con la que cae
 	public float HPMAX,HP; // Vida maxima, Vida actual
 	public GameObject myFicha;
