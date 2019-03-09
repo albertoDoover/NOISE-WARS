@@ -6,13 +6,13 @@ using Photon.Realtime;
 using UnityEngine.UI;
 using ExitGames.Client.Photon;
 
+// Script general de la partida 
 public class GestorPartida : MonoBehaviourPunCallbacks {
 
 	public bool IsConnected=false;
 	public int myPing;
 	public Text myPingText,myKDAText,MensajePartida;
 	public Transform myPuntoCreacion,Interfaz;
-	public string myRegion;
 	public GameObject myPlayer,Seleccion;
 	public TowerScript[] Torres;
 	public int EquipoVictoria=-1; 
@@ -20,6 +20,8 @@ public class GestorPartida : MonoBehaviourPunCallbacks {
 	public CAM CamaraPrincipal;
 	string NombrePlayer;
 	public InputField NombrePlayerText;
+	public GestorMultiTouch MultiTouch;
+	public Chat myChat;
 
 	#region Funciones Basicas
 	void Awake(){
@@ -35,16 +37,17 @@ public class GestorPartida : MonoBehaviourPunCallbacks {
 	}
 
 	void Update(){
+		// Zoom al personaje
 		if(Input.GetAxis("Mouse ScrollWheel")>0 && DistanciaCamara<17f){
 			DistanciaCamara=DistanciaCamara+0.25f;
 		}else if(Input.GetAxis("Mouse ScrollWheel")<0 && DistanciaCamara>10f){
 			DistanciaCamara=DistanciaCamara-0.25f;
 		}
 
+		// Estado de conexion
 		IsConnected=PhotonNetwork.IsConnected;
 		if(PhotonNetwork.CurrentRoom!=null && IsConnected){
 		myPing = PhotonNetwork.GetPing();
-		myRegion=PhotonNetwork.CloudRegion;
 		myPingText.text="Ping:"+myPing.ToString()+"ms";
 		}else{
 		myPingText.text="Desconectado";
@@ -70,6 +73,10 @@ public class GestorPartida : MonoBehaviourPunCallbacks {
 		Seleccion.SetActive(false);
 		myPlayer=PhotonNetwork.Instantiate("Fantin",myPuntoCreacion.position,Quaternion.identity,0,null);
 		SetName();
+		MultiTouch.AdaptarPersonajePrincipal(myPlayer.GetComponent<Personaje>());
+		if(Application.isMobilePlatform){
+		MultiTouch.gameObject.SetActive(true);
+		}
 		}
      }
 
@@ -78,6 +85,10 @@ public class GestorPartida : MonoBehaviourPunCallbacks {
 		Seleccion.SetActive(false);
 		myPlayer=PhotonNetwork.Instantiate("Kalani",myPuntoCreacion.position,Quaternion.identity,0,null);
 		SetName();
+		MultiTouch.AdaptarPersonajePrincipal(myPlayer.GetComponent<Personaje>());
+		if(Application.isMobilePlatform){
+		MultiTouch.gameObject.SetActive(true);
+		}
 		}
       }
 
@@ -95,14 +106,16 @@ public class GestorPartida : MonoBehaviourPunCallbacks {
 	#endregion
 
 	#region Torres
-	public void DañoTorre(int Daño,int Code){
+	public void DañoTorre(int Daño,int Code){ // Reportar daño a torres y bases
 		Torres[Code].ReportarDañoTorre(Daño);
 	}
 
 	void FixedUpdate(){
+		// Adaptar interfaz a zoom
 		Interfaz.localScale=new Vector3(DistanciaCamara/13.6f,DistanciaCamara/13.6f,1f);
 		CamaraPrincipal.orthographicSize=DistanciaCamara;
-		if(PhotonNetwork.IsMasterClient && EquipoVictoria==-1){
+
+		if(PhotonNetwork.IsMasterClient && EquipoVictoria==-1){ // Verificar que equipo gano
 			if((Torres[0].HP)<=0){
 				myPlayer.GetComponent<PhotonView>().RPC("setVictoriaOnline",RpcTarget.AllBuffered,2);
 			}else if((Torres[7].HP)<=0){{
@@ -112,7 +125,7 @@ public class GestorPartida : MonoBehaviourPunCallbacks {
 	  }
 	}
 
-	public void setVictoria(int Team){
+	public void setVictoria(int Team){ // Finalizar partida
 	if(EquipoVictoria==-1){
 		EquipoVictoria=Team;
 		if(myPlayer.GetComponent<PersonajeOnline>().TeamID==Team){
@@ -125,7 +138,7 @@ public class GestorPartida : MonoBehaviourPunCallbacks {
 	#endregion
 
 	#region NombreJugador
-	void SetNombreGenerico(){
+	void SetNombreGenerico(){ // Asignar nombre generico al jugador
 		NombrePlayer="Player"+(Mathf.RoundToInt(9999*Random.value)).ToString();
 		NombrePlayerText.text=NombrePlayer;
 	}

@@ -10,20 +10,29 @@ public class GestorMultiTouch : MonoBehaviour {
 	Vector2 pos; // Posicion de toque en Vector2
 	RaycastHit2D hit2d; // Raycast emitido en busqueda de colision
 	public Personaje PersonajeActivo; // Personaje del jugador
+	public SpriteRenderer SpriteDerecha,SpriteIzquierda;
+	public Sprite Activado,Desactivado;
 
 	void Start () {
 		if(!Application.isMobilePlatform){
-			gameObject.SetActive (false);
+			gameObject.SetActive(false);
 		}
 		BotonesActivos = new List<Transform>();	
 		FlechasActivas = new List<Transform>();	
+	}
+
+	public void AdaptarPersonajePrincipal(Personaje myPlayer){ // Asignar personaje controlable a la interfaz
+		PersonajeActivo=myPlayer;
+		for(int i=0;i<Botones.Length;i++){
+			Botones [i].GetComponent<BotonAccion> ().PersonajeControlable=myPlayer;
+		}
 	}
 
 	void Update () {
 		BotonesActivos.Clear ();
 		FlechasActivas.Clear ();
 		int direccion = 0;
-		if (Application.isMobilePlatform) {
+		if (Application.isMobilePlatform) { // Analizar toques
 			if (Input.touchCount > 0) {
 				for (int i = 0; i < Input.touchCount; i++) {
 					if (Input.GetTouch (i).phase != TouchPhase.Began) {
@@ -44,7 +53,7 @@ public class GestorMultiTouch : MonoBehaviour {
 				}
 			}
 		} else {
-			if (Input.GetMouseButton (0)) {
+			if (Input.GetMouseButton (0)) { // Analizar clicks
 				touchworld = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 				pos = new Vector2 (touchworld.x, touchworld.y);
 				hit2d = Physics2D.Raycast (pos, Camera.main.transform.forward);
@@ -61,17 +70,23 @@ public class GestorMultiTouch : MonoBehaviour {
 			}
 		}
 
-		if(PersonajeActivo!=null){
+		if(PersonajeActivo!=null){ // Asignar movimiento
 			if (direccion == 1) {
 				PersonajeActivo.MoveRight ();
+				SpriteDerecha.sprite=Activado;
+				SpriteIzquierda.sprite=Desactivado;
 			} else if (direccion == -1) {
 				PersonajeActivo.MoveLeft ();
+				SpriteDerecha.sprite=Desactivado;
+				SpriteIzquierda.sprite=Activado;
 			} else {
 				PersonajeActivo.MoveZero ();
+				SpriteDerecha.sprite=Desactivado;
+				SpriteIzquierda.sprite=Desactivado;
 			}
 		}
 
-		for(int i=0;i<Botones.Length;i++){
+		for(int i=0;i<Botones.Length;i++){ // Establecer botones no pulsados
 			if(!BotonesActivos.Contains(Botones[i])){
 				Botones [i].GetComponent<BotonAccion> ().push=false;
 			}

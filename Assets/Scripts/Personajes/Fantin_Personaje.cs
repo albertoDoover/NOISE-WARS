@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Codigo especifico para personaje Fantin. Se incluye generacion de especial1 y ultimate (El especial 2 se incluye en la animacion de Fantin)
 public class Fantin_Personaje : MonoBehaviour {
 
 	public GameObject Ulti,Basico,Especial;
@@ -9,24 +10,12 @@ public class Fantin_Personaje : MonoBehaviour {
 	public float VelocidadEspecial;
 	public Personaje myPersonaje;
 
-	public void CrearFlama(){
+	public void CrearFlama(){ // Ultimate
 		Instantiate(Ulti,UltiPoint.position,Ulti.transform.rotation).GetComponent<AtaqueScript>().myCharacter=GetComponent<Personaje>();
 	}
 
-	public void CrearBasico(){
+	public void CrearBasico(){ // Ataque basico (Explosion)
 		Instantiate(Basico,BasicoPoint.position,Basico.transform.rotation).GetComponent<AtaqueScript>().myCharacter=GetComponent<Personaje>();
-	}
-
-	public void AumentarDefensa(){
-		CancelInvoke();
-		myPersonaje.FactorDaño=0.5f;
-		myPersonaje.spi.color=Color.yellow;
-		Invoke("RestaurarDefensa",5f);
-	}
-
-	void RestaurarDefensa(){
-	myPersonaje.FactorDaño=1f;
-	myPersonaje.spi.color=Color.white;
 	}
 
 	public void CrearEspecial1(){

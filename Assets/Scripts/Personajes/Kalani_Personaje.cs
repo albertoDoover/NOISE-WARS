@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Codigo especifico del personaje Kalani
 public class Kalani_Personaje : MonoBehaviour {
 
 	public GameObject Ulti,Especial1,Especial2;

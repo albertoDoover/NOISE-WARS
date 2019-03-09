@@ -44,11 +44,11 @@ public class Personaje : MonoBehaviour {
 	}
 
 	void Update () {
-		BarraVida.fillAmount = HP / HPMAX;
-		tocasuelo=Physics2D.OverlapBox (comprobadorsuelo.position, new Vector2(RadioSuelo,0.05f),0f, mascarasuelo);
-		wiggle=Physics2D.OverlapCircle (ComprobadorSueloWiggle.position, RadioWiggle, mascarasuelo);
+		BarraVida.fillAmount = HP / HPMAX; // Mostrar vida
+		tocasuelo=Physics2D.OverlapBox (comprobadorsuelo.position, new Vector2(RadioSuelo,0.05f),0f, mascarasuelo); // Verificar suelo
+		wiggle=Physics2D.OverlapCircle (ComprobadorSueloWiggle.position, RadioWiggle, mascarasuelo); // Verificar si posee ambos pies en plataforma
 
-		if (rig.velocity.y > 0.1f) {
+		if (rig.velocity.y > 0.1f) { // Verificar si el personaje sube o baja
 			subiendo = true;
 			gameObject.layer=11;
 		} else if (rig.velocity.y <= 0f) {
@@ -56,17 +56,17 @@ public class Personaje : MonoBehaviour {
 			gameObject.layer=9;
 		}
 
-		if (GetComponent<PersonajeOnline>().isMine && HP>0 && !BlockMove) {			
+		if (GetComponent<PersonajeOnline>().isMine && HP>0 && !BlockMove) {	// Deteccion de botones (PC)		
 			if (!subiendo && tocasuelo ) {
 				SaltoDisp=2;
 					if (!atacando) {					
-						if (Input.GetKey(KeyCode.S)) {
+						if (Input.GetKey(KeyCode.S) && !myGestorPartida.myChat.BarraTexto.gameObject.activeInHierarchy) {
 						EspecialUlti (0);
-						} else if (Input.GetKeyDown (KeyCode.A)) {
+					} else if (Input.GetKeyDown (KeyCode.A)  && !myGestorPartida.myChat.BarraTexto.gameObject.activeInHierarchy) {
 						EspecialUlti (1);
-						} else if (Input.GetKeyDown (KeyCode.D)) {
+					} else if (Input.GetKeyDown (KeyCode.D)  && !myGestorPartida.myChat.BarraTexto.gameObject.activeInHierarchy) {
 						EspecialUlti (2);
-						} else if (Input.GetKeyDown (KeyCode.W)) {
+					} else if (Input.GetKeyDown (KeyCode.W)  && !myGestorPartida.myChat.BarraTexto.gameObject.activeInHierarchy) {
 						EspecialUlti (3);
 						}						
 					} else {
@@ -87,6 +87,7 @@ public class Personaje : MonoBehaviour {
 				MoveZero ();
 			}
 		}
+			// Actualizar animator
 			anim.SetBool ("Hit", hit);
 			anim.SetInteger ("NumeroAtaque", numeroATK);
 			anim.SetBool ("ensuelo", tocasuelo);
@@ -100,7 +101,7 @@ public class Personaje : MonoBehaviour {
 	#endregion
 
 	#region Movimientos
-	public  void MoveLeft(){
+	public  void MoveLeft(){ // Mover personaje a izquierda
 		if (!noqueado && !atacando && HP > 0) {
 			corriendo = true;
 			rig.velocity = (new Vector2 (-vel, rig.velocity.y));
@@ -110,7 +111,7 @@ public class Personaje : MonoBehaviour {
 		}
 	}
 
-	public void MoveRight(){
+	public void MoveRight(){ // Mover personaje a la derecha
 		if (!noqueado && !atacando && HP > 0) {
 			corriendo = true;
 			rig.velocity = (new Vector2 (vel, rig.velocity.y));
@@ -120,12 +121,12 @@ public class Personaje : MonoBehaviour {
 		}
 	}
 
-	public void MoveZero(){
+	public void MoveZero(){ // Frenar personaje
 		corriendo = false;
 		rig.velocity = (new Vector2 (0f, rig.velocity.y));
 	}
 
-	public void EspecialUlti(int code){
+	public void EspecialUlti(int code){ // Realizar basico, moviemiento especial o ultimate
 		if(!atacando && tocasuelo && !subiendo){
 			ConteoAtk++;
 			numeroATK = code;
@@ -133,7 +134,7 @@ public class Personaje : MonoBehaviour {
 		}
 	}
 
-	public void saltar(){
+	public void saltar(){ // Salto xd
 		if (SaltoDisp>0 && !atacando && HP>0) {
 			SaltoDisp--;
 			rig.velocity = new Vector2 (rig.velocity.x,0f);
@@ -141,11 +142,11 @@ public class Personaje : MonoBehaviour {
 		}
 	}
 
-	void endNoqueado(){
+	void endNoqueado(){ // Finalizar Stun
 		noqueado = false;
 	}
 
-	void Revivir(){
+	void Revivir(){ // Reubicar personaje a posicion inicial
 		if (GetComponent<PersonajeOnline>().isMine) {
 			Camera.main.GetComponent<CamFollow> ().player = transform;
 		}
@@ -163,12 +164,12 @@ public class Personaje : MonoBehaviour {
 	#endregion
 
 	#region Efectos
-	public void DeathSetup(){
+	public void DeathSetup(){ // Iniciar conteo para respawn
 		rig.velocity=Vector2.zero;
-		Invoke ("Revivir",3f);
+		Invoke ("Revivir",10f);
 	}
 
-	public void spritemostrar(){
+	public void spritemostrar(){ 
 		spi.color = new Color (spi.color.r,spi.color.g,spi.color.b,1f);
 		BarraFondo.color = new Color (BarraFondo.color.r,BarraFondo.color.g,BarraFondo.color.b,1f);
 		BarraVida.color = new Color (BarraVida.color.r,BarraVida.color.g,BarraVida.color.b,1f);
@@ -186,12 +187,12 @@ public class Personaje : MonoBehaviour {
 		spi.color = new Color (spi.color.r,spi.color.g,spi.color.b,55f/255f);
 	}
 
-	public void finishattack(){
+	public void finishattack(){ // Finalizar ataque
 		atacando = false;
 		numeroATK = -1;
 	}
 
-	public void HitOn(){
+	public void HitOn(){ // Activar color rojizo que indique Hit
 		if(!hit){
 			hit=true;
 			Invoke("HitOff",0.05f);
@@ -199,17 +200,19 @@ public class Personaje : MonoBehaviour {
 			spi.color= new Color(248f/255f,162f/255f,107f/255f,1f);
 	}
 
-	void HitOff(){
+	void HitOff(){ // Desactivar hit
 		spi.color= new Color(1f,1f,1f,1f);
 		hit=false;
 	}
 
-	public void MuerteVolar(){
+	public void MuerteVolar(){ // Muerte en el aire
 		GetComponent<BoxCollider2D>().enabled=false;
-		if(GetComponent<PersonajeOnline>().isMine){
+		if(GetComponent<PersonajeOnline>().isMine){ // Detener seguimiento de camara
 			Camera.main.GetComponent<CamFollow>().player=null;
 		}
-		GetComponent<BoxCollider2D>().enabled=false;
+		GetComponent<BoxCollider2D>().enabled=false; // Desactivar colisiones
+
+		// Impular personaje
 		rig.gravityScale=0f;
 		if(transform.localScale.z>=0){
 			rig.AddForce(new Vector2(-30f,100f),ForceMode2D.Impulse);
@@ -218,18 +221,20 @@ public class Personaje : MonoBehaviour {
 		}
 	}
 
-	public void StopAnimation(){
+	public void StopAnimation(){ // Detener animacion brevemente de acuerdo al ping
 		if(GetComponent<PersonajeOnline>().isMine){
 			anim.speed=0f;
 			Invoke("Continuar",Photon.Pun.PhotonNetwork.GetPing()/2000f);
 		}
 	}
 
-	void Continuar(){
+	void Continuar(){ // Reanudar animacion
 		anim.speed=1f;
 	}
-	#endregion EfectosEnemigos
-	public IEnumerator Pulling(float PulseSpeed,Vector2 Impulse){
+	#endregion 
+
+	#region EfectosEnemigos
+	public IEnumerator Pulling(float PulseSpeed,Vector2 Impulse){ // Atraer personaje a punto
 		BlockMove=true;
 		rig.velocity=Vector2.zero;
 		rig.gravityScale=0f;
@@ -241,7 +246,7 @@ public class Personaje : MonoBehaviour {
 		ResetBlockMove();
 	}
 
-	public void Pulsing(Vector2 Force,float Time){
+	public void Pulsing(Vector2 Force,float Time){ // Repeler personaje
 		BlockMove=true;
 		rig.velocity=Vector2.zero;
 		rig.gravityScale=0f;
@@ -249,20 +254,17 @@ public class Personaje : MonoBehaviour {
 		Invoke("ResetBlockMove",Time);
 	}
 
-	void ResetBlockMove(){
+	void ResetBlockMove(){ // Restaurar habilidad de movimiento del personaje
 		rig.gravityScale=gravedad;
 		BlockMove=false;
 	}
-
-	#region
-
 	#endregion
 
 	#region ResolucionDaño
 	public List<string> ListaAtacantes;
 	string Ejecutor="";
 
-	public void ResolverDaño(float daño, int tipo,string NombreAtacante){
+	public void ResolverDaño(float daño, int tipo,string NombreAtacante){ // Restar HP al personaje y tomar registro de quien lo ataca y como
 		if(!tocasuelo){
 			TipoMuerte=-1;
 		}else{
@@ -272,7 +274,6 @@ public class Personaje : MonoBehaviour {
 		if(HP>0){			
 			if(daño>=HP){
 				HP=0;
-				Invoke("Revivir",10f);
 				Ejecutor=NombreAtacante;
 				if(Photon.Pun.PhotonNetwork.IsMasterClient){
 				GameObject.Find(Ejecutor).GetComponent<Score>().CallUpdateKDA(1,0,0);
@@ -287,7 +288,7 @@ public class Personaje : MonoBehaviour {
 		}
 	}
 
-	void ReportarAsistencias(){
+	void ReportarAsistencias(){ // Añadir asistencias a jugadores correspondientes
 	List<string> Asistencias= new List<string>();
 		foreach(string value in ListaAtacantes){
 			if(!Asistencias.Contains(value) && value!=Ejecutor){
@@ -302,7 +303,7 @@ public class Personaje : MonoBehaviour {
 		ListaAtacantes.Clear();
 	}
 
-	void RemoverAsistencia(){
+	void RemoverAsistencia(){ // Remover posibilidad de asistencia luego de cierto tiempo
 	if(ListaAtacantes.Count>0){
 	ListaAtacantes.RemoveAt(0);
 	}
